@@ -1,0 +1,27 @@
+version: '3.7'
+services:  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+#    container_name: senprints_mariadb_phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "2337:80"
+    depends_on:
+      - mariadb
+    networks:
+      - public-http
+    environment:
+      - VIRTUAL_HOST=#VIRTUAL-HOST
+      - VIRTUAL_PORT=80
+      - HTTPS_METHOD=noredirect
+      - LETSENCRYPT_HOST=#VIRTUAL-HOST
+      - LETSENCRYPT_EMAIL=nkien.bk@gmail.com
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+      - UPLOAD_LIMIT=300M
+      - PMA_ARBITRARY=1
+      
+networks:
+  public-http:
+    external: true 
+      
